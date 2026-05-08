@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>意識神諭卡｜清理與下載</title>
+    <style>
+        :root {
+            --pos-bg: #f0fdf4; --pos-text: #166534; --pos-border: #bbf7d0;
+            --neg-bg: #fef2f2; --neg-text: #991b1b; --neg-border: #fecaca;
+            --primary: #6366f1;
+        }
+        body {
+            font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 100vh; margin: 0; padding: 20px;
+        }
+        .card-box {
+            background: white; padding: 2rem; border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            width: 100%; max-width: 450px; text-align: center;
+        }
+        .tag {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            font-size: 0.8rem; margin-bottom: 15px; font-weight: bold;
+        }
+        #display-area {
+            min-height: 180px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            margin: 20px 0; padding: 25px; border-radius: 18px;
+            border: 2px solid #eee; transition: all 0.3s ease;
+        }
+        .content-text { font-size: 1.3rem; font-weight: 600; line-height: 1.6; margin-bottom: 10px; }
+        .instruction { font-size: 0.9rem; opacity: 0.8; }
+        
+        button {
+            background: var(--primary); color: white; border: none;
+            padding: 15px 40px; font-size: 1.1rem; border-radius: 50px;
+            cursor: pointer; transition: 0.3s; width: 100%;
+        }
+        button:hover { background: #4f46e5; transform: translateY(-2px); }
+
+        .support-btn {
+            margin-top: 30px; display: flex; gap: 10px; justify-content: center;
+        }
+        .support-btn a {
+            text-decoration: none; color: #666; font-size: 0.85rem;
+            padding: 8px 15px; border: 1px solid #ddd; border-radius: 8px;
+        }
+        /* 樣式切換 */
+        .style-pos { background: var(--pos-bg) !important; color: var(--pos-text) !important; border-color: var(--pos-border) !important; }
+        .style-neg { background: var(--neg-bg) !important; color: var(--neg-text) !important; border-color: var(--neg-border) !important; }
+    </style>
+</head>
+<body>
+
+<div class="card-box">
+    <div id="category-tag" class="tag" style="background: #eee; color: #666;">點擊按鈕開啟訊息</div>
+    <div id="display-area">
+        <div class="content-text">閉上眼，連結源頭...</div>
+    </div>
+    <button onclick="draw()">抽取意識卡片</button>
+
+    <div class="support-btn">
+        <a href="https://p.ecpay.com.tw/C887CAB" target="_blank">☕ 台灣隨喜支持</a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=s9413494134@gmail.com&item_name=SophiaOracleSupport&currency_code=USD" target="_blank">🌎 海外隨喜支持</a>
+    </div>
+</div>
+
+<script>
+    const database = [
+        // 金錢 (15)
+        { t: "我值得擁有源源不絕的財富", type: 1, cat: "金錢與財富" },
+        { t: "金錢是愛的能量流動，來到我身邊是安全的", type: 1, cat: "金錢與財富" },
+        { t: "我知道如何優雅、輕鬆地創造豐盛", type: 1, cat: "金錢與財富" },
+        { t: "我被允許在做自己熱愛的事情時獲得極大財富", type: 1, cat: "金錢與財富" },
+        { t: "我的存在本身就具有極高的價值", type: 1, cat: "金錢與財富" },
+        { t: "財富自由是我的神聖權利", type: 1, cat: "金錢與財富" },
+        { t: "我吸引金錢的能力與日俱增", type: 1, cat: "金錢與財富" },
+        { t: "我能明智且喜悅地運用每一分資源", type: 1, cat: "金錢與財富" },
+        { t: "錢很髒，會讓人變邪惡", type: 0, cat: "金錢與財富" },
+        { t: "如果我有錢，身邊的人會利用我", type: 0, cat: "金錢與財富" },
+        { t: "追求財富是不屬靈、不清高的", type: 0, cat: "金錢與財富" },
+        { t: "錢很難賺，必須拿命去換", type: 0, cat: "金錢與財富" },
+        { t: "我不配擁有比父母更多的財富", type: 0, cat: "金錢與財富" },
+        { t: "錢一旦花掉就不會再回來", type: 0, cat: "金錢與財富" },
+        { t: "我注定一輩子為錢辛苦", type: 0, cat: "金錢與財富" },
+
+        // 家人關係 (14)
+        { t: "我能平衡家庭責任與個人自由", type: 1, cat: "家人關係" },
+        { t: "我與父母的靈魂達成和解，感受他們的愛", type: 1, cat: "家人關係" },
+        { t: "我可以愛我的家人，同時保持健康的邊界", type: 1, cat: "家人關係" },
+        { t: "我是家族業力轉換的起點，我帶來療癒", type: 1, cat: "家人關係" },
+        { t: "家庭是我溫暖的避風港與力量來源", type: 1, cat: "家人關係" },
+        { t: "我被允許超越家族的限制，活出新生命", type: 1, cat: "家人關係" },
+        { t: "我在家人面前能自在地展現真實的自己", type: 1, cat: "家人關係" },
+        { t: "我必須犧牲自己才能讓家人快樂", type: 0, cat: "家人關係" },
+        { t: "我這輩子都要背負家人的情緒垃圾", type: 0, cat: "家人關係" },
+        { t: "家人是我這輩子的債主", type: 0, cat: "家人關係" },
+        { t: "如果我不聽話，我就不是個好孩子", type: 0, cat: "家人關係" },
+        { t: "我必須變得優秀，父母才會愛我", type: 0, cat: "家人關係" },
+        { t: "遺傳疾病與負面習性是我無法擺脫的命運", type: 0, cat: "家人關係" },
+        { t: "我必須為父母的不快樂負責", type: 0, cat: "家人關係" },
+
+        // 感情與伴侶 (14)
+        { t: "我值得被溫柔、真誠且專一地對待", type: 1, cat: "感情與伴侶" },
+        { t: "我知道如何與靈魂伴侶建立充滿光的連結", type: 1, cat: "感情與伴侶" },
+        { t: "我在親密關係中感到絕對的安全與支持", type: 1, cat: "感情與伴侶" },
+        { t: "真愛是自在的，不需要透過討好來獲得", type: 1, cat: "感情與伴侶" },
+        { t: "兩個人在一起能讓彼此變得更完整", type: 1, cat: "感情與伴侶" },
+        { t: "我吸引到的對象與我的靈魂頻率共振", type: 1, cat: "感情與伴侶" },
+        { t: "我可以同時擁有愛與自由", type: 1, cat: "感情與伴侶" },
+        { t: "我不夠漂亮，所以沒人會愛我", type: 0, cat: "感情與伴侶" },
+        { t: "感情到最後一定會變質或背叛", type: 0, cat: "感情與伴侶" },
+        { t: "我必須表現完美，對方才不會離開我", type: 0, cat: "感情與伴侶" },
+        { t: "我總是吸引到會傷害我的人", type: 0, cat: "感情與伴侶" },
+        { t: "單身代表我是一個失敗的人", type: 0, cat: "感情與伴侶" },
+        { t: "愛情就是一場互相控制的權力遊戲", type: 0, cat: "感情與伴侶" },
+        { t: "我不值得擁有長久且穩定的幸福", type: 0, cat: "感情與伴侶" },
+
+        // 職場 (14)
+        { t: "我周圍充滿了提攜我、愛護我的貴人", type: 1, cat: "職場與人際" },
+        { t: "我能輕鬆地與人溝通並達成共識", type: 1, cat: "職場與人際" },
+        { t: "我的才華被看見並獲得應有的尊重", type: 1, cat: "職場與人際" },
+        { t: "我在任何團體中都能感到自在與受歡迎", type: 1, cat: "職場與人際" },
+        { t: "我懂得拒絕不合理要求，這不影響專業", type: 1, cat: "職場與人際" },
+        { t: "他人的成功是我的靈感，而非威脅", type: 1, cat: "職場與人際" },
+        { t: "我自帶光芒，能自然地吸引正向合作", type: 1, cat: "職場與人際" },
+        { t: "職場如戰場，我不害人別人都會害我", type: 0, cat: "職場與人際" },
+        { t: "我必須很強勢，別人才不會看輕我", type: 0, cat: "職場與人際" },
+        { t: "社會很現實，沒背景的人注定吃虧", type: 0, cat: "職場與人際" },
+        { t: "我害怕被他人評價，這讓我縮手縮腳", type: 0, cat: "職場與人際" },
+        { t: "如果我表現太突出，會被同事排擠", type: 0, cat: "職場與人際" },
+        { t: "我覺得自己像個騙子，擔心被發現能力不足", type: 0, cat: "職場與人際" },
+        { t: "我不擅長社交，註定孤軍奮戰", type: 0, cat: "職場與人際" },
+
+        // 健康 (14)
+        { t: "我的細胞充滿了宇宙的生命活力", type: 1, cat: "健康與身體" },
+        { t: "我聽得懂身體的訊號，並給予照顧", type: 1, cat: "健康與身體" },
+        { t: "保持健康對我來說是輕而易舉的", type: 1, cat: "健康與身體" },
+        { t: "我的身體是我靈魂居住的神聖聖殿", type: 1, cat: "健康與身體" },
+        { t: "我深愛並接納此時此刻身體的樣貌", type: 1, cat: "健康與身體" },
+        { t: "我每天醒來都精神奕奕", type: 1, cat: "健康與身體" },
+        { t: "我的免疫系統強大且充滿智慧", type: 1, cat: "健康與身體" },
+        { t: "生病是吸引他人注意與關心的唯一方式", type: 0, cat: "健康與身體" },
+        { t: "我的身體很脆弱，隨時可能垮掉", type: 0, cat: "健康與身體" },
+        { t: "衰老是痛苦且不可避免的受難", type: 0, cat: "健康與身體" },
+        { t: "我無法控制自己的食慾或負面習慣", type: 0, cat: "健康與身體" },
+        { t: "壓力大到我的身體已經無法負荷", type: 0, cat: "健康與身體" },
+        { t: "我對自己的身材感到羞恥", type: 0, cat: "健康與身體" },
+        { t: "疼痛是我人生的一部分，我無法擺脫", type: 0, cat: "健康與身體" },
+
+        // 事業 (15)
+        { t: "我的事業是傳遞愛與光，它會自動擴展", type: 1, cat: "事業與天命" },
+        { t: "宇宙是我最強大的合作夥伴，提供一切資源", type: 1, cat: "事業與天命" },
+        { t: "我正走在最適合我的神聖生命道路上", type: 1, cat: "事業與天命" },
+        { t: "創業對我來說是安全的，且受到指引", type: 1, cat: "事業與天命" },
+        { t: "我的創意有價值，能解決他人的問題", type: 1, cat: "事業與天命" },
+        { t: "工作不是為了生存，而是顯化天賦", type: 1, cat: "事業與天命" },
+        { t: "我能平衡感性直覺與理性決策", type: 1, cat: "事業與天命" },
+        { t: "每一天的進展都讓我充滿成就感", type: 1, cat: "事業與天命" },
+        { t: "只有少數幸運兒才能擁有成功的事業", type: 0, cat: "事業與天命" },
+        { t: "做自己喜歡的事是賺不了錢的", type: 0, cat: "事業與天命" },
+        { t: "我沒有足夠的資源、學歷或人脈", type: 0, cat: "事業與天命" },
+        { t: "競爭對手太多，我不可能脫穎而出", type: 0, cat: "事業與天命" },
+        { t: "事業成功會讓我失去個人生活", type: 0, cat: "事業與天命" },
+        { t: "我害怕失敗，所以遲遲不敢行動", type: 0, cat: "事業與天命" },
+        { t: "我不夠專業，沒資格指導別人", type: 0, cat: "事業與天命" },
+
+        // 靈性 (14)
+        { t: "我與源頭是合一的，我從不孤單", type: 1, cat: "靈性成長" },
+        { t: "所有的生活經驗都是靈魂成長的養分", type: 1, cat: "靈性成長" },
+        { t: "我擁有強大的直覺力，能接收宇宙訊息", type: 1, cat: "靈性成長" },
+        { t: "活在當下是我最強大的力量中心", type: 1, cat: "靈性成長" },
+        { t: "我允許奇蹟每天在我的生命中發生", type: 1, cat: "靈性成長" },
+        { t: "寬恕他人就是解脫自己，我選擇慈悲", type: 1, cat: "靈性成長" },
+        { t: "我的存在就是宇宙最美麗的傑作", type: 1, cat: "靈性成長" },
+        { t: "我有很多罪惡感，宇宙在懲罰我", type: 0, cat: "靈性成長" },
+        { t: "靈修很難，我可能這輩子都無法覺醒", type: 0, cat: "靈性成長" },
+        { t: "我必須受苦才能洗清我的業障", type: 0, cat: "靈性成長" },
+        { t: "我不夠純淨，聽不見神聖的指引", type: 0, cat: "靈性成長" },
+        { t: "恐懼感主宰了我的生活", type: 0, cat: "靈性成長" },
+        { t: "我覺得活著好累，想逃離這個世界", type: 0, cat: "靈性成長" },
+        { t: "這些清理和下載對我都沒效果", type: 0, cat: "靈性成長" }
+    ];
+
+    function draw() {
+        const display = document.getElementById('display-area');
+        const tag = document.getElementById('category-tag');
+        const card = database[Math.floor(Math.random() * database.length)];
+        
+        tag.innerText = card.cat;
+        display.classList.remove('style-pos', 'style-neg');
+        
+        if (card.type === 1) {
+            display.classList.add('style-pos');
+            display.innerHTML = `<div class="instruction">【宇宙下載】</div><div class="content-text">${card.t}</div>`;
+        } else {
+            display.classList.add('style-neg');
+            display.innerHTML = `<div class="instruction">【零極限清理】</div><div class="content-text">${card.t}</div><div class="instruction">( 對不起、請原諒我、謝謝你、我愛你 )</div>`;
+        }
+    }
+</script>
+
+</body>
+</html>
