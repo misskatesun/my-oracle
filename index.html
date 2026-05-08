@@ -46,7 +46,24 @@
             word-break: break-all; white-space: pre-wrap;
         }
         .content-text { font-size: 1.35rem; font-weight: 600; line-height: 1.7; margin-bottom: 12px; }
-        .instruction { font-size: 0.9rem; opacity: 0.8; font-weight: 500; white-space: nowrap; }
+        .instruction { 
+            font-size: 0.85rem; 
+            opacity: 0.8; 
+            font-weight: 500; 
+            white-space: nowrap; 
+            letter-spacing: -0.5px;
+        }
+
+        /* 針對手機端的特別調整 */
+        @media (max-width: 480px) {
+            .instruction {
+                font-size: 0.72rem; /* 在手機上字會縮小一點點，確保塞得下一整行 */
+                letter-spacing: -0.8px; 
+            }
+            .content-text {
+                font-size: 1.15rem; /* 手機版的主文字也稍微縮小一點點，比例更美 */
+            }
+        }
         
         button {
             background: var(--primary); color: white; border: none;
@@ -93,7 +110,7 @@
     <div id="capture-area">
         <div id="category-tag" class="tag" style="background: rgba(238,238,238,0.8); color: #444;">在這個當下，<br>宇宙源頭推薦你<br>清理／下載什麼資料呢？</div>
         <div id="display-area">
-            <div class="content-text" style="color:#555;">閉上眼、想像白光<br>連結宇宙源頭<br>無條件的愛...</div>
+            <div class="content-text" style="color:#555;">閉上眼、想像白光<br>連結宇宙源頭<br>無條件的愛💖</div>
         </div>
     </div>
 
