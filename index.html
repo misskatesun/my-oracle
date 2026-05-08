@@ -3,83 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>宇宙源頭神諭卡｜清理與下載</title>
+    <meta property="og:title" content="宇宙源頭神諭卡｜清理與下載">
+    <meta property="og:description" content="連結宇宙源頭，為你的意識進行清理與下載。">
+    <meta property="og:image" content="https://misskatesun.github.io/my-oracle/preview.jpg">
+    <meta property="og:type" content="website">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
-            /* 修改 1: 將負面色調改為暖橘色 */
             --pos-bg: rgba(240, 253, 244, 0.9); --pos-text: #166534; --pos-border: #bbf7d0;
             --neg-bg: rgba(255, 247, 237, 0.9); --neg-text: #9a3412; --neg-border: #fed7aa;
-            --primary: #484891; /* 修改 4: 按鈕顏色 */
+            --primary: #484891;
         }
         body {
             font-family: 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            /* 修改 2: 換成宇宙背景照片 */
             background: url('https://images.pexels.com/photos/13444721/pexels-photo-13444721.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2') no-repeat center center fixed;
             background-size: cover;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             min-height: 100vh; margin: 0; padding: 20px;
         }
         .card-box {
-            background: rgba(255, 255, 255, 0.85); /* 半透明白色，透出背景的美 */
-            backdrop-filter: blur(5px); /* 磨砂玻璃效果 */
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
             padding: 2.5rem; border-radius: 24px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             width: 100%; max-width: 450px; text-align: center;
             border: 1px solid rgba(255,255,255,0.3);
         }
         .tag {
-            display: inline-block; padding: 6px 16px; border-radius: 20px;
+            display: inline-block; padding: 6px 16px; border-radius: 5px;
             font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px;
+            line-height: 1.5;
         }
         #display-area {
             min-height: 200px; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
-            margin: 20px 0; padding: 25px; border-radius: 18px;
+            margin: 20px 0; padding: 25px; 
+            border-radius: 2px;
             border: 2px solid #eee; transition: all 0.3s ease;
+            word-break: break-all; white-space: pre-wrap;
         }
         .content-text { font-size: 1.35rem; font-weight: 600; line-height: 1.7; margin-bottom: 12px; }
-        .instruction { font-size: 0.95rem; opacity: 0.9; font-weight: 500; }
+        .instruction { font-size: 0.9rem; opacity: 0.8; font-weight: 500; white-space: nowrap; }
         
         button {
             background: var(--primary); color: white; border: none;
             padding: 16px 40px; font-size: 1.1rem; border-radius: 50px;
             cursor: pointer; transition: 0.3s; width: 100%;
             box-shadow: 0 4px 15px rgba(72, 72, 145, 0.4);
+            margin-top: 10px;
         }
-        button:hover { background: #363670; transform: translateY(-2px); }
+        button:disabled { background: #ccc; cursor: not-allowed; }
 
-        .support-btn {
-            margin-top: 35px; display: flex; gap: 12px; justify-content: center;
+        .download-link {
+            display: block; margin: 15px 0; color: #484891; font-size: 0.85rem;
+            text-decoration: none; cursor: pointer; font-weight: bold;
         }
-        .support-btn a {
+
+        /* 修改 2: 社群媒體改回原本的框線樣式 */
+        .social-links a {
             text-decoration: none; color: #484891; font-size: 0.85rem;
-            padding: 8px 15px; border: 1px solid #484891; border-radius: 8px;
+            padding: 8px 12px; border: 1px solid #484891; border-radius: 8px;
             background: rgba(255,255,255,0.5); transition: 0.2s;
+            display: inline-block; margin: 4px;
         }
-        .support-btn a:hover { background: #484891; color: white; }
+        .social-links a:hover { background: #484891; color: white; }
 
+        /* 隨喜按鈕維持質感實色樣式 */
+        .support-btn a {
+            text-decoration: none; color: white; font-size: 0.85rem;
+            padding: 10px 18px; background: rgba(72, 72, 145, 0.85);
+            border-radius: 12px; transition: 0.2s;
+            display: inline-block; margin: 6px; font-weight: 500;
+        }
+        .support-btn a:hover { background: rgba(72, 72, 145, 1); transform: translateY(-1px); }
+        
+        .loading-dots:after { content: ' .'; animation: dots 1s steps(5, end) infinite; }
+        @keyframes dots { 0%, 20% { color: rgba(0,0,0,0); text-shadow: .5em 0 0 rgba(0,0,0,0), 1em 0 0 rgba(0,0,0,0); } 40% { color: #555; text-shadow: .5em 0 0 rgba(0,0,0,0), 1em 0 0 rgba(0,0,0,0); } 60% { text-shadow: .5em 0 0 #555, 1em 0 0 rgba(0,0,0,0); } 80%, 100% { text-shadow: .5em 0 0 #555, 1em 0 0 #555; } }
+        
         .style-pos { background: var(--pos-bg) !important; color: var(--pos-text) !important; border-color: var(--pos-border) !important; }
         .style-neg { background: var(--neg-bg) !important; color: var(--neg-text) !important; border-color: var(--neg-border) !important; }
     </style>
 </head>
 <body>
 
-<div class="card-box">
-    <div id="category-tag" class="tag" style="background: rgba(238,238,238,0.8); color: #444;">點擊下方按鈕</div>
-    <div id="display-area">
-        <div class="content-text" style="color:#555;">閉上眼、想像白光，連結宇宙源頭無條件的愛...</div>
+<div class="card-box" id="main-container">
+    <div id="capture-area">
+        <div id="category-tag" class="tag" style="background: rgba(238,238,238,0.8); color: #444;">在這個當下，<br>宇宙源頭推薦你<br>清理／下載什麼資料呢？</div>
+        <div id="display-area">
+            <div class="content-text" style="color:#555;">閉上眼、想像白光<br>連結宇宙源頭無條件的愛...</div>
+        </div>
     </div>
-    <button onclick="draw()">抽取宇宙源頭建議</button>
 
-    <div class="support-btn">
-        <a href="https://p.ecpay.com.tw/C887CAB" target="_blank">☕ 台灣隨喜支持</a>
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=s9413494134@gmail.com&item_name=SophiaOracleSupport&currency_code=USD" target="_blank">🌎 海外隨喜支持</a>
+    <div class="actions-area">
+        <button id="draw-btn" onclick="draw()">抽取宇宙源頭建議</button>
+        <a id="download-btn" class="download-link" style="display:none;" onclick="downloadImage()">📸 下載這份指引卡</a>
+
+        <div class="social-links" style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px;">
+            <a href="https://www.facebook.com/dorakatemon/" target="_blank">💙 凱特的FB</a>
+            <a href="https://www.instagram.com/katesuncourse/" target="_blank">🩷 凱特的IG</a>
+            <a href="https://www.youtube.com/@katesungoodlife" target="_blank">❤️ 凱特的YouTube</a>
+        </div>
+
+        <div class="support-btn" style="margin-top: 12px;">
+            <a href="https://p.ecpay.com.tw/C887CAB" target="_blank">☕ 台灣隨喜支持</a>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=s9413494134@gmail.com&item_name=SophiaOracleSupport&currency_code=USD" target="_blank">🌎 海外隨喜支持</a>
+        </div>
     </div>
 </div>
 
 <script>
     const database = [
-        // 靈性成長 (正面)
         { t: "我值得無條件的愛", type: 1, cat: "靈性成長" },
         { t: "我與宇宙源頭是一體的", type: 1, cat: "靈性成長" },
         { t: "我有權力活出真正的自己", type: 1, cat: "靈性成長" },
@@ -90,8 +126,6 @@
         { t: "我接納並擁抱我的所有陰影", type: 1, cat: "靈性成長" },
         { t: "奇蹟每天都在我的生活中發生", type: 1, cat: "靈性成長" },
         { t: "我的存在本身就是一份珍貴的禮物", type: 1, cat: "靈性成長" },
-
-        // 金錢與財富 (正面)
         { t: "財富自由是可能的、安全的、被允許的、很正常的", type: 1, cat: "金錢與財富" },
         { t: "不用努力就會有錢", type: 1, cat: "金錢與財富" },
         { t: "金錢是愛與服務的能量流動", type: 1, cat: "金錢與財富" },
@@ -102,8 +136,6 @@
         { t: "我花出去的錢都會加倍回到我身邊", type: 1, cat: "金錢與財富" },
         { t: "我有權力過上極度奢華且有靈性的生活", type: 1, cat: "金錢與財富" },
         { t: "金錢支持我更好地完成靈魂使命", type: 1, cat: "金錢與財富" },
-
-        // 感情與伴侶 (正面)
         { t: "我值得擁有一段充滿愛與尊重的關係", type: 1, cat: "感情與伴侶" },
         { t: "我吸引靈魂契合的伴侶來到我身邊", type: 1, cat: "感情與伴侶" },
         { t: "我在關係中感到安全、自由且被呵護", type: 1, cat: "感情與伴侶" },
@@ -114,8 +146,6 @@
         { t: "我的伴侶完全支持我的成長與夢想", type: 1, cat: "感情與伴侶" },
         { t: "我與伴侶共享喜悅、平靜與激情", type: 1, cat: "感情與伴侶" },
         { t: "愛是簡單的，愛是和諧的", type: 1, cat: "感情與伴侶" },
-
-        // 事業與天賦 (正面)
         { t: "我的天賦是這世界所需的寶藏", type: 1, cat: "事業與天賦" },
         { t: "我的事業與我的靈魂目標完美對齊", type: 1, cat: "事業與天賦" },
         { t: "我做著我熱愛的事，並獲得豐厚的報酬", type: 1, cat: "事業與天賦" },
@@ -126,8 +156,6 @@
         { t: "我值得在事業上獲得巨大的成功與影響力", type: 1, cat: "事業與天賦" },
         { t: "我輕鬆吸引理想的客戶與合作夥伴", type: 1, cat: "事業與天賦" },
         { t: "我的工作為這世界帶來愛與光", type: 1, cat: "事業與天賦" },
-
-        // 身體與健康 (正面)
         { t: "我的身體擁有強大的自我修復能力", type: 1, cat: "身體與健康" },
         { t: "我愛我身體的每一個細胞", type: 1, cat: "身體與健康" },
         { t: "我的身體充滿了活力與純淨的能量", type: 1, cat: "身體與健康" },
@@ -138,8 +166,6 @@
         { t: "我聽從身體的智慧，給予它真正所需的", type: 1, cat: "身體與健康" },
         { t: "我的呼吸帶入光，呼出所有緊繃", type: 1, cat: "身體與健康" },
         { t: "健康是我的天賦權利", type: 1, cat: "身體與健康" },
-
-        // 負面清理 (共 50 條)
         { t: "我不夠好", type: 0, cat: "靈性成長" },
         { t: "我不值得被愛", type: 0, cat: "靈性成長" },
         { t: "我不配擁有幸福", type: 0, cat: "靈性成長" },
@@ -150,7 +176,6 @@
         { t: "我必須討好別人才能生存", type: 0, cat: "靈性成長" },
         { t: "我與源頭斷了連結", type: 0, cat: "靈性成長" },
         { t: "我的存在是一種負擔", type: 0, cat: "靈性成長" },
-        
         { t: "賺錢很辛苦", type: 0, cat: "金錢與財富" },
         { t: "有錢就會變壞", type: 0, cat: "金錢與財富" },
         { t: "有錢就會有危險", type: 0, cat: "金錢與財富" },
@@ -161,7 +186,6 @@
         { t: "我的資源是匱乏的", type: 0, cat: "金錢與財富" },
         { t: "錢會流失得很快", type: 0, cat: "金錢與財富" },
         { t: "有錢會讓我有壓力", type: 0, cat: "金錢與財富" },
-
         { t: "我得證明自己值得被愛", type: 0, cat: "感情與伴侶" },
         { t: "男人/女人都不可信", type: 0, cat: "感情與伴侶" },
         { t: "伴侶會限制我的自由", type: 0, cat: "感情與伴侶" },
@@ -172,7 +196,6 @@
         { t: "我在關係中是被遺棄的", type: 0, cat: "感情與伴侶" },
         { t: "我不配擁有穩定的關係", type: 0, cat: "感情與伴侶" },
         { t: "愛是充滿痛苦與掙扎的", type: 0, cat: "感情與伴侶" },
-
         { t: "我沒有才華", type: 0, cat: "事業與天賦" },
         { t: "我的工作毫無意義", type: 0, cat: "事業與天賦" },
         { t: "我注定失敗", type: 0, cat: "事業與天賦" },
@@ -183,7 +206,6 @@
         { t: "沒有人會支持我的事業", type: 0, cat: "事業與天賦" },
         { t: "我不擅長處理商業事務", type: 0, cat: "事業與天賦" },
         { t: "我不值得被大眾看見", type: 0, cat: "事業與天賦" },
-
         { t: "我的身體很虛弱", type: 0, cat: "身體與健康" },
         { t: "生病是不可避免的", type: 0, cat: "身體與健康" },
         { t: "我討厭我的身體", type: 0, cat: "身體與健康" },
@@ -197,22 +219,58 @@
     ];
 
     function draw() {
+        const btn = document.getElementById('draw-btn');
         const display = document.getElementById('display-area');
         const tag = document.getElementById('category-tag');
-        const card = database[Math.floor(Math.random() * database.length)];
+        const downloadBtn = document.getElementById('download-btn');
         
-        tag.innerText = card.cat;
+        btn.disabled = true;
+        downloadBtn.style.display = 'none';
+        tag.innerHTML = "連結中...";
         display.classList.remove('style-pos', 'style-neg');
-        
-        if (card.type === 1) {
-            display.classList.add('style-pos');
-            // 修改 3: 正面資料下方加入 YES! 謝謝你、我愛你
-            display.innerHTML = `<div class="instruction">【下載資料】</div><div class="content-text">${card.t}</div><div class="instruction">YES! 謝謝你、我愛你</div>`;
-        } else {
-            display.classList.add('style-neg');
-            // 修改 1: 負面資料的樣式已改為橘色
-            display.innerHTML = `<div class="instruction">【清理資料】</div><div class="content-text">${card.t}</div><div class="instruction">( 對不起、請原諒我、謝謝你、我愛你 )</div>`;
-        }
+        display.innerHTML = `<div class="content-text loading-dots" style="color:#888;">正在接收宇宙訊息</div>`;
+
+        setTimeout(() => {
+            const card = database[Math.floor(Math.random() * database.length)];
+            const formattedText = card.t.replace(/[，、,]/g, '$&<br>');
+            
+            tag.innerHTML = `宇宙源頭神諭指引<br>(${card.cat})`;
+            
+            if (card.type === 1) {
+                display.classList.add('style-pos');
+                display.innerHTML = `<div class="instruction">【下載資料】</div><div class="content-text">${formattedText}</div><div class="instruction">( YES! 謝謝你、我愛你 )</div>`;
+            } else {
+                display.classList.add('style-neg');
+                display.innerHTML = `<div class="instruction">【清理資料】</div><div class="content-text">${formattedText}</div><div class="instruction">( 對不起、請原諒我、謝謝你、我愛你 )</div>`;
+            }
+            
+            btn.disabled = false;
+            downloadBtn.style.display = 'inline-block';
+        }, 1000);
+    }
+
+    function downloadImage() {
+        const target = document.getElementById('capture-area');
+        html2canvas(target, {
+            useCORS: true,
+            scale: 3,
+            backgroundColor: "#ffffff",
+            onclone: (clonedDoc) => {
+                const area = clonedDoc.getElementById('capture-area');
+                area.style.padding = "40px";
+                area.style.borderRadius = "0px";
+                area.style.display = "flex";
+                area.style.flexDirection = "column";
+                area.style.alignItems = "center";
+                area.style.justifyContent = "center";
+                area.style.minHeight = "400px";
+            }
+        }).then(canvas => {
+            const link = document.createElement('a');
+            link.download = '宇宙源頭神諭指引.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
     }
 </script>
 
