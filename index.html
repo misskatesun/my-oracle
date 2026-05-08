@@ -32,37 +32,32 @@
             width: 100%; max-width: 450px; text-align: center;
             border: 1px solid rgba(255,255,255,0.3);
         }
+        
+        /* 這裡修正了標籤的圓角為 2px */
         .tag {
-            display: inline-block; padding: 6px 16px; border-radius: 5px;
+            display: inline-block; padding: 6px 16px; border-radius: 2px;
             font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px;
             line-height: 1.5;
+            background: rgba(238,238,238,0.8); color: #444;
         }
+        
         #display-area {
             min-height: 200px; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             margin: 20px 0; padding: 25px; 
-            border-radius: 2px;
+            border-radius: 2px; /* 顯示框圓角也維持 2px */
             border: 2px solid #eee; transition: all 0.3s ease;
             word-break: break-all; white-space: pre-wrap;
         }
         .content-text { font-size: 1.35rem; font-weight: 600; line-height: 1.7; margin-bottom: 12px; }
+        
         .instruction { 
-            font-size: 0.85rem; 
-            opacity: 0.8; 
-            font-weight: 500; 
-            white-space: nowrap; 
-            letter-spacing: -0.5px;
+            font-size: 0.85rem; opacity: 0.8; font-weight: 500; 
+            white-space: nowrap; letter-spacing: -0.5px;
         }
-
-        /* 針對手機端的特別調整 */
         @media (max-width: 480px) {
-            .instruction {
-                font-size: 0.72rem; /* 在手機上字會縮小一點點，確保塞得下一整行 */
-                letter-spacing: -0.8px; 
-            }
-            .content-text {
-                font-size: 1.15rem; /* 手機版的主文字也稍微縮小一點點，比例更美 */
-            }
+            .instruction { font-size: 0.72rem; letter-spacing: -0.8px; }
+            .content-text { font-size: 1.15rem; }
         }
         
         button {
@@ -79,7 +74,6 @@
             text-decoration: none; cursor: pointer; font-weight: bold;
         }
 
-        /* 修改 2: 社群媒體改回原本的框線樣式 */
         .social-links a {
             text-decoration: none; color: #484891; font-size: 0.85rem;
             padding: 8px 12px; border: 1px solid #484891; border-radius: 8px;
@@ -88,7 +82,6 @@
         }
         .social-links a:hover { background: #484891; color: white; }
 
-        /* 隨喜按鈕維持質感實色樣式 */
         .support-btn a {
             text-decoration: none; color: white; font-size: 0.85rem;
             padding: 10px 18px; background: rgba(72, 72, 145, 0.85);
@@ -97,6 +90,20 @@
         }
         .support-btn a:hover { background: rgba(72, 72, 145, 1); transform: translateY(-1px); }
         
+        #preview-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 1000;
+            flex-direction: column; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        #preview-image { 
+            max-width: 85%; max-height: 70%; border-radius: 10px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px;
+        }
+        .close-btn { color: white; margin-top: 20px; cursor: pointer; text-decoration: underline; font-size: 0.9rem; }
+        .save-tip { color: #f0f0f0; font-size: 1.1rem; margin-bottom: 10px; font-weight: bold; animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+
         .loading-dots:after { content: ' .'; animation: dots 1s steps(5, end) infinite; }
         @keyframes dots { 0%, 20% { color: rgba(0,0,0,0); text-shadow: .5em 0 0 rgba(0,0,0,0), 1em 0 0 rgba(0,0,0,0); } 40% { color: #555; text-shadow: .5em 0 0 rgba(0,0,0,0), 1em 0 0 rgba(0,0,0,0); } 60% { text-shadow: .5em 0 0 #555, 1em 0 0 rgba(0,0,0,0); } 80%, 100% { text-shadow: .5em 0 0 #555, 1em 0 0 #555; } }
         
@@ -108,15 +115,15 @@
 
 <div class="card-box" id="main-container">
     <div id="capture-area">
-        <div id="category-tag" class="tag" style="background: rgba(238,238,238,0.8); color: #444;">在這個當下，<br>宇宙源頭推薦你<br>清理／下載什麼資料呢？</div>
+        <div id="category-tag" class="tag">在這個當下，<br>宇宙源頭推薦你<br>清理／下載什麼資料呢？</div>
         <div id="display-area">
-            <div class="content-text" style="color:#555;">閉上眼、想像白光<br>連結宇宙源頭<br>無條件的愛💖</div>
+            <div class="content-text" style="color:#555;">閉上眼、想像白光<br>連結宇宙源頭無條件的愛...</div>
         </div>
     </div>
 
     <div class="actions-area">
         <button id="draw-btn" onclick="draw()">抽取宇宙源頭建議</button>
-        <a id="download-btn" class="download-link" style="display:none;" onclick="downloadImage()">↓ 📸 儲存這份指引卡 ↓</a>
+        <a id="download-btn" class="download-link" style="display:none;" onclick="generatePreview()">📸 生成分享圖片 (可存相簿)</a>
 
         <div class="social-links" style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px;">
             <a href="https://www.facebook.com/dorakatemon/" target="_blank">💙 凱特的FB</a>
@@ -126,13 +133,20 @@
 
         <div class="support-btn" style="margin-top: 12px;">
             <a href="https://p.ecpay.com.tw/C887CAB" target="_blank">☕ 台灣隨喜支持</a>
-            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=s9413494134@gmail.com&item_name=KateSunOracle&currency_code=USD" target="_blank">🌎 海外隨喜支持</a>
+            <a href="javascript:void(0)" onclick="goToPaypal()">🌎 海外隨喜支持</a>
         </div>
     </div>
 </div>
 
+<div id="preview-overlay">
+    <div class="save-tip">✨ 請長按圖片選擇「儲存至相片」</div>
+    <img id="preview-image" src="" alt="神諭卡預覽">
+    <div class="close-btn" onclick="closePreview()">← 返回抽牌頁面</div>
+</div>
+
 <script>
     const database = [
+        /* 已完整收錄 100 條分類資料 */
         { t: "我值得無條件的愛", type: 1, cat: "靈性成長" },
         { t: "我與宇宙源頭是一體的", type: 1, cat: "靈性成長" },
         { t: "我有權力活出真正的自己", type: 1, cat: "靈性成長" },
@@ -251,6 +265,7 @@
             const card = database[Math.floor(Math.random() * database.length)];
             const formattedText = card.t.replace(/[，、,]/g, '$&<br>');
             
+            // 這裡確保分類 (cat) 會正確顯示
             tag.innerHTML = `宇宙源頭神諭指引<br>(${card.cat})`;
             
             if (card.type === 1) {
@@ -260,14 +275,16 @@
                 display.classList.add('style-neg');
                 display.innerHTML = `<div class="instruction">【清理資料】</div><div class="content-text">${formattedText}</div><div class="instruction">( 對不起、請原諒我、謝謝你、我愛你 )</div>`;
             }
-            
             btn.disabled = false;
             downloadBtn.style.display = 'inline-block';
         }, 1000);
     }
 
-function downloadImage() {
+    function generatePreview() {
         const target = document.getElementById('capture-area');
+        const btn = document.getElementById('download-btn');
+        btn.innerText = "圖片生成中...";
+
         html2canvas(target, {
             useCORS: true,
             scale: 3,
@@ -276,21 +293,31 @@ function downloadImage() {
                 const area = clonedDoc.getElementById('capture-area');
                 area.style.padding = "40px";
                 area.style.borderRadius = "0px";
-                area.style.width = "450px"; // 強制固定寬度，給文字足夠的伸展空間
-                
-                // 找到截圖中的那行指令文字，確保它在截圖瞬間字體夠小
+                area.style.width = "400px";
                 const ins = clonedDoc.querySelectorAll('.instruction');
-                ins.forEach(el => {
-                    el.style.fontSize = "12px"; 
-                    el.style.letterSpacing = "-1px";
+                ins.forEach(el => { 
+                    el.style.fontSize = "11px";
+                    el.style.letterSpacing = "-0.5px";
                 });
             }
         }).then(canvas => {
-            const link = document.createElement('a');
-            link.download = '宇宙源頭神諭指引.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
+            const previewOverlay = document.getElementById('preview-overlay');
+            const previewImage = document.getElementById('preview-image');
+            previewImage.src = canvas.toDataURL('image/png');
+            previewOverlay.style.display = 'flex';
+            btn.innerText = "📸 生成分享圖片 (可存相簿)";
         });
+    }
+
+    function closePreview() {
+        document.getElementById('preview-overlay').style.display = 'none';
+    }
+
+    function goToPaypal() {
+        const user = "s9413494134";
+        const domain = "@gmail.com";
+        const url = "https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=" + user + domain + "&item_name=KateSunOracle&currency_code=USD";
+        window.open(url, '_blank');
     }
 </script>
 
