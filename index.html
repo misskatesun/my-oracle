@@ -266,7 +266,7 @@
         }, 1000);
     }
 
-    function downloadImage() {
+function downloadImage() {
         const target = document.getElementById('capture-area');
         html2canvas(target, {
             useCORS: true,
@@ -276,11 +276,14 @@
                 const area = clonedDoc.getElementById('capture-area');
                 area.style.padding = "40px";
                 area.style.borderRadius = "0px";
-                area.style.display = "flex";
-                area.style.flexDirection = "column";
-                area.style.alignItems = "center";
-                area.style.justifyContent = "center";
-                area.style.minHeight = "400px";
+                area.style.width = "450px"; // 強制固定寬度，給文字足夠的伸展空間
+                
+                // 找到截圖中的那行指令文字，確保它在截圖瞬間字體夠小
+                const ins = clonedDoc.querySelectorAll('.instruction');
+                ins.forEach(el => {
+                    el.style.fontSize = "12px"; 
+                    el.style.letterSpacing = "-1px";
+                });
             }
         }).then(canvas => {
             const link = document.createElement('a');
