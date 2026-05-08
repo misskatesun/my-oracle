@@ -49,15 +49,35 @@
             border: 2px solid #eee; transition: all 0.3s ease;
             word-break: break-all; white-space: pre-wrap;
         }
-        .content-text { font-size: 1.35rem; font-weight: 600; line-height: 1.7; margin-bottom: 12px; }
+        .content-text { 
+            font-size: 1.35rem; 
+            font-weight: 600; 
+            line-height: 1.6; 
+            margin-bottom: 12px;
+            /* 讓長句子在必要時能溫柔地換行，不會擠在一起 */
+            word-break: keep-all;
         
         .instruction { 
-            font-size: 0.85rem; opacity: 0.8; font-weight: 500; 
-            white-space: nowrap; letter-spacing: -0.5px;
+            font-size: 0.9rem; 
+            opacity: 0.8; 
+            font-weight: 500; 
+            white-space: nowrap; /* 依然堅持不換行 */
+            letter-spacing: -0.2px;
         }
+        /* 針對手機端的平衡調整 */
         @media (max-width: 480px) {
-            .instruction { font-size: 0.72rem; letter-spacing: -0.8px; }
-            .content-text { font-size: 1.15rem; }
+            .instruction { 
+                /* 使用 vw (螢幕寬度單位)，讓字體隨螢幕大小微調 */
+                font-size: 3.2vw; 
+                letter-spacing: -0.5px;
+            }
+            .content-text {
+                font-size: 1.2rem;
+                line-height: 1.5;
+            }
+            .card-box {
+                padding: 1.8rem 1.2rem; /* 左右留白縮小，爭取文字空間 */
+            }
         }
         
         button {
@@ -273,7 +293,7 @@
                 display.innerHTML = `<div class="instruction">【下載資料】</div><div class="content-text">${formattedText}</div><div class="instruction">( YES! 謝謝你、我愛你 )</div>`;
             } else {
                 display.classList.add('style-neg');
-                display.innerHTML = `<div class="instruction">【清理資料】</div><div class="content-text">${formattedText}</div><div class="instruction">( 對不起、請原諒我、謝謝你、我愛你 )</div>`;
+                display.innerHTML = `<div class="instruction">【清理資料】</div><div class="content-text">${formattedText}</div><div class="instruction">( 對不起．請原諒我．謝謝你．我愛你 )</div>`;
             }
             btn.disabled = false;
             downloadBtn.style.display = 'inline-block';
@@ -291,12 +311,13 @@
             backgroundColor: "#ffffff",
             onclone: (clonedDoc) => {
                 const area = clonedDoc.getElementById('capture-area');
-                area.style.padding = "40px";
+                area.style.padding = "40px 20px";
                 area.style.borderRadius = "0px";
-                area.style.width = "400px";
+                area.style.width = "420px"; // 稍微加寬，給長句子空間
+                
                 const ins = clonedDoc.querySelectorAll('.instruction');
                 ins.forEach(el => { 
-                    el.style.fontSize = "11px";
+                    el.style.fontSize = "14px"; // 截圖字體維持清晰
                     el.style.letterSpacing = "-0.5px";
                 });
             }
