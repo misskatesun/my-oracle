@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>意識神諭卡｜清理與下載</title>
+    <title>宇宙源頭神諭卡｜清理與下載</title>
     <style>
         :root {
             /* 修改 1: 將負面色調改為暖橘色 */
@@ -65,11 +65,11 @@
 <body>
 
 <div class="card-box">
-    <div id="category-tag" class="tag" style="background: rgba(238,238,238,0.8); color: #444;">點擊按鈕開啟訊息</div>
+    <div id="category-tag" class="tag" style="background: rgba(238,238,238,0.8); color: #444;">點擊下方按鈕</div>
     <div id="display-area">
-        <div class="content-text" style="color:#555;">閉上眼，連結宇宙源頭...</div>
+        <div class="content-text" style="color:#555;">閉上眼、想像白光，連結宇宙源頭無條件的愛...</div>
     </div>
-    <button onclick="draw()">抽取意識卡片</button>
+    <button onclick="draw()">抽取宇宙源頭建議</button>
 
     <div class="support-btn">
         <a href="https://p.ecpay.com.tw/C887CAB" target="_blank">☕ 台灣隨喜支持</a>
@@ -78,16 +78,122 @@
 </div>
 
 <script>
-    // 資料庫保持不變（略，請延用之前的 100 條資料內容）
     const database = [
-        /* ... 這裡請放入之前那 100 條資料內容 ... */
+        // 靈性成長 (正面)
         { t: "我值得無條件的愛", type: 1, cat: "靈性成長" },
+        { t: "我與宇宙源頭是一體的", type: 1, cat: "靈性成長" },
+        { t: "我有權力活出真正的自己", type: 1, cat: "靈性成長" },
+        { t: "我的內在擁有無窮的智慧", type: 1, cat: "靈性成長" },
+        { t: "我信任生命的流動與安排", type: 1, cat: "靈性成長" },
+        { t: "我選擇看見每個人靈魂的光芒", type: 1, cat: "靈性成長" },
+        { t: "我是愛，我被愛，我就是愛本身", type: 1, cat: "靈性成長" },
+        { t: "我接納並擁抱我的所有陰影", type: 1, cat: "靈性成長" },
+        { t: "奇蹟每天都在我的生活中發生", type: 1, cat: "靈性成長" },
+        { t: "我的存在本身就是一份珍貴的禮物", type: 1, cat: "靈性成長" },
+
+        // 金錢與財富 (正面)
         { t: "財富自由是可能的、安全的、被允許的、很正常的", type: 1, cat: "金錢與財富" },
         { t: "不用努力就會有錢", type: 1, cat: "金錢與財富" },
-        { t: "我得證明自己值得被愛", type: 0, cat: "感情與伴侶" },
+        { t: "金錢是愛與服務的能量流動", type: 1, cat: "金錢與財富" },
+        { t: "我吸引豐盛的資源來到我身邊", type: 1, cat: "金錢與財富" },
+        { t: "我有能力創造巨大的財富價值", type: 1, cat: "金錢與財富" },
+        { t: "宇宙的豐盛庫房對我完全敞開", type: 1, cat: "金錢與財富" },
+        { t: "金錢來到我身邊是件輕鬆喜悅的事", type: 1, cat: "金錢與財富" },
+        { t: "我花出去的錢都會加倍回到我身邊", type: 1, cat: "金錢與財富" },
+        { t: "我有權力過上極度奢華且有靈性的生活", type: 1, cat: "金錢與財富" },
+        { t: "金錢支持我更好地完成靈魂使命", type: 1, cat: "金錢與財富" },
+
+        // 感情與伴侶 (正面)
+        { t: "我值得擁有一段充滿愛與尊重的關係", type: 1, cat: "感情與伴侶" },
+        { t: "我吸引靈魂契合的伴侶來到我身邊", type: 1, cat: "感情與伴侶" },
+        { t: "我在關係中感到安全、自由且被呵護", type: 1, cat: "感情與伴侶" },
+        { t: "我與伴侶之間的溝通是充滿愛與理解的", type: 1, cat: "感情與伴侶" },
+        { t: "我愛我現在的樣子，我值得被全然珍惜", type: 1, cat: "感情與伴侶" },
+        { t: "我放下過去的傷痛，勇敢迎接新的愛", type: 1, cat: "感情與伴侶" },
+        { t: "愛在我的關係中自然地流動", type: 1, cat: "感情與伴侶" },
+        { t: "我的伴侶完全支持我的成長與夢想", type: 1, cat: "感情與伴侶" },
+        { t: "我與伴侶共享喜悅、平靜與激情", type: 1, cat: "感情與伴侶" },
+        { t: "愛是簡單的，愛是和諧的", type: 1, cat: "感情與伴侶" },
+
+        // 事業與天賦 (正面)
+        { t: "我的天賦是這世界所需的寶藏", type: 1, cat: "事業與天賦" },
+        { t: "我的事業與我的靈魂目標完美對齊", type: 1, cat: "事業與天賦" },
+        { t: "我做著我熱愛的事，並獲得豐厚的報酬", type: 1, cat: "事業與天賦" },
+        { t: "我身邊充滿了願意支持我的貴人", type: 1, cat: "事業與天賦" },
+        { t: "我自信地表達我的獨特見解與創意", type: 1, cat: "事業與天賦" },
+        { t: "每一天，我的事業都在穩定擴張", type: 1, cat: "事業與天賦" },
+        { t: "我有源源不絕的靈感與創造力", type: 1, cat: "事業與天賦" },
+        { t: "我值得在事業上獲得巨大的成功與影響力", type: 1, cat: "事業與天賦" },
+        { t: "我輕鬆吸引理想的客戶與合作夥伴", type: 1, cat: "事業與天賦" },
+        { t: "我的工作為這世界帶來愛與光", type: 1, cat: "事業與天賦" },
+
+        // 身體與健康 (正面)
+        { t: "我的身體擁有強大的自我修復能力", type: 1, cat: "身體與健康" },
+        { t: "我愛我身體的每一個細胞", type: 1, cat: "身體與健康" },
+        { t: "我的身體充滿了活力與純淨的能量", type: 1, cat: "身體與健康" },
+        { t: "我感謝身體每一天為我的辛勞付出", type: 1, cat: "身體與健康" },
+        { t: "我值得擁有完美的健康與曼妙的身材", type: 1, cat: "身體與健康" },
+        { t: "我的睡眠是深層且具修復力的", type: 1, cat: "身體與健康" },
+        { t: "我與食物的關係是和諧且健康的", type: 1, cat: "身體與健康" },
+        { t: "我聽從身體的智慧，給予它真正所需的", type: 1, cat: "身體與健康" },
+        { t: "我的呼吸帶入光，呼出所有緊繃", type: 1, cat: "身體與健康" },
+        { t: "健康是我的天賦權利", type: 1, cat: "身體與健康" },
+
+        // 負面清理 (共 50 條)
+        { t: "我不夠好", type: 0, cat: "靈性成長" },
+        { t: "我不值得被愛", type: 0, cat: "靈性成長" },
+        { t: "我不配擁有幸福", type: 0, cat: "靈性成長" },
+        { t: "我有罪惡感", type: 0, cat: "靈性成長" },
+        { t: "我必須表現完美才會被接納", type: 0, cat: "靈性成長" },
+        { t: "世界是不安全的", type: 0, cat: "靈性成長" },
+        { t: "我沒有價值", type: 0, cat: "靈性成長" },
+        { t: "我必須討好別人才能生存", type: 0, cat: "靈性成長" },
+        { t: "我與源頭斷了連結", type: 0, cat: "靈性成長" },
+        { t: "我的存在是一種負擔", type: 0, cat: "靈性成長" },
+        
+        { t: "賺錢很辛苦", type: 0, cat: "金錢與財富" },
+        { t: "有錢就會變壞", type: 0, cat: "金錢與財富" },
         { t: "有錢就會有危險", type: 0, cat: "金錢與財富" },
-        { t: "我必須很努力才會有錢", type: 0, cat: "金錢與財富" }
-        // (請在此處補回剩下的語句)
+        { t: "我不配擁有財富", type: 0, cat: "金錢與財富" },
+        { t: "錢是不乾淨的", type: 0, cat: "金錢與財富" },
+        { t: "金錢會破壞關係", type: 0, cat: "金錢與財富" },
+        { t: "我必須很努力才會有錢", type: 0, cat: "金錢與財富" },
+        { t: "我的資源是匱乏的", type: 0, cat: "金錢與財富" },
+        { t: "錢會流失得很快", type: 0, cat: "金錢與財富" },
+        { t: "有錢會讓我有壓力", type: 0, cat: "金錢與財富" },
+
+        { t: "我得證明自己值得被愛", type: 0, cat: "感情與伴侶" },
+        { t: "男人/女人都不可信", type: 0, cat: "感情與伴侶" },
+        { t: "伴侶會限制我的自由", type: 0, cat: "感情與伴侶" },
+        { t: "我注定孤獨一生", type: 0, cat: "感情與伴侶" },
+        { t: "關係最後都會受傷", type: 0, cat: "感情與伴侶" },
+        { t: "我必須改變自己去迎合伴侶", type: 0, cat: "感情與伴侶" },
+        { t: "真愛不存在", type: 0, cat: "感情與伴侶" },
+        { t: "我在關係中是被遺棄的", type: 0, cat: "感情與伴侶" },
+        { t: "我不配擁有穩定的關係", type: 0, cat: "感情與伴侶" },
+        { t: "愛是充滿痛苦與掙扎的", type: 0, cat: "感情與伴侶" },
+
+        { t: "我沒有才華", type: 0, cat: "事業與天賦" },
+        { t: "我的工作毫無意義", type: 0, cat: "事業與天賦" },
+        { t: "我注定失敗", type: 0, cat: "事業與天賦" },
+        { t: "我不具備成功的特質", type: 0, cat: "事業與天賦" },
+        { t: "競爭很激烈，我贏不了", type: 0, cat: "事業與天賦" },
+        { t: "追求夢想是不切實際的", type: 0, cat: "事業與天賦" },
+        { t: "我必須犧牲健康才能換取成功", type: 0, cat: "事業與天賦" },
+        { t: "沒有人會支持我的事業", type: 0, cat: "事業與天賦" },
+        { t: "我不擅長處理商業事務", type: 0, cat: "事業與天賦" },
+        { t: "我不值得被大眾看見", type: 0, cat: "事業與天賦" },
+
+        { t: "我的身體很虛弱", type: 0, cat: "身體與健康" },
+        { t: "生病是不可避免的", type: 0, cat: "身體與健康" },
+        { t: "我討厭我的身體", type: 0, cat: "身體與健康" },
+        { t: "老了就會變醜變病", type: 0, cat: "身體與健康" },
+        { t: "基因決定了我的健康現況", type: 0, cat: "身體與健康" },
+        { t: "我無法控制我的體重", type: 0, cat: "身體與健康" },
+        { t: "我不配感到活力充沛", type: 0, cat: "身體與健康" },
+        { t: "我的疲累是無法消失的", type: 0, cat: "身體與健康" },
+        { t: "醫療系統無法幫助我", type: 0, cat: "身體與健康" },
+        { t: "我必須承受家族性的遺傳疾病", type: 0, cat: "身體與健康" }
     ];
 
     function draw() {
@@ -101,11 +207,11 @@
         if (card.type === 1) {
             display.classList.add('style-pos');
             // 修改 3: 正面資料下方加入 YES! 謝謝你、我愛你
-            display.innerHTML = `<div class="instruction">【宇宙下載】</div><div class="content-text">${card.t}</div><div class="instruction">YES! 謝謝你、我愛你</div>`;
+            display.innerHTML = `<div class="instruction">【下載資料】</div><div class="content-text">${card.t}</div><div class="instruction">YES! 謝謝你、我愛你</div>`;
         } else {
             display.classList.add('style-neg');
             // 修改 1: 負面資料的樣式已改為橘色
-            display.innerHTML = `<div class="instruction">【零極限清理】</div><div class="content-text">${card.t}</div><div class="instruction">( 對不起、請原諒我、謝謝你、我愛你 )</div>`;
+            display.innerHTML = `<div class="instruction">【清理資料】</div><div class="content-text">${card.t}</div><div class="instruction">( 對不起、請原諒我、謝謝你、我愛你 )</div>`;
         }
     }
 </script>
