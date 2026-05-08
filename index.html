@@ -33,7 +33,6 @@
             border: 1px solid rgba(255,255,255,0.3);
         }
         
-        /* 這裡修正了標籤的圓角為 2px */
         .tag {
             display: inline-block; padding: 6px 16px; border-radius: 2px;
             font-size: 0.85rem; margin-bottom: 20px; font-weight: bold; letter-spacing: 1px;
@@ -45,29 +44,30 @@
             min-height: 200px; display: flex; flex-direction: column;
             align-items: center; justify-content: center;
             margin: 20px 0; padding: 25px; 
-            border-radius: 2px; /* 顯示框圓角也維持 2px */
+            border-radius: 2px;
             border: 2px solid #eee; transition: all 0.3s ease;
             word-break: break-all; white-space: pre-wrap;
         }
+
+        /* 這裡修正了括號問題 */
         .content-text { 
             font-size: 1.35rem; 
             font-weight: 600; 
             line-height: 1.6; 
             margin-bottom: 12px;
-            /* 讓長句子在必要時能溫柔地換行，不會擠在一起 */
             word-break: keep-all;
-        
+        }
+
         .instruction { 
             font-size: 0.9rem; 
             opacity: 0.8; 
             font-weight: 500; 
-            white-space: nowrap; /* 依然堅持不換行 */
+            white-space: nowrap;
             letter-spacing: -0.2px;
         }
-        /* 針對手機端的平衡調整 */
+
         @media (max-width: 480px) {
             .instruction { 
-                /* 使用 vw (螢幕寬度單位)，讓字體隨螢幕大小微調 */
                 font-size: 3.2vw; 
                 letter-spacing: -0.5px;
             }
@@ -76,7 +76,7 @@
                 line-height: 1.5;
             }
             .card-box {
-                padding: 1.8rem 1.2rem; /* 左右留白縮小，爭取文字空間 */
+                padding: 1.8rem 1.2rem;
             }
         }
         
@@ -111,7 +111,8 @@
         .support-btn a:hover { background: rgba(72, 72, 145, 1); transform: translateY(-1px); }
         
         #preview-overlay {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; /* 現在它會乖乖隱藏了 */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); z-index: 1000;
             flex-direction: column; align-items: center; justify-content: center;
             backdrop-filter: blur(5px);
